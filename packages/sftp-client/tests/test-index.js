@@ -7,7 +7,7 @@ const S3 = require('@cumulus/aws-client/S3');
 const test = require('ava');
 const { promisify } = require('util');
 const { randomString } = require('@cumulus/common/test-utils');
-const SftpClient = require('..');
+const { SftpClient } = require('..');
 
 const readFile = promisify(fs.readFile);
 const stat = promisify(fs.stat);
@@ -85,7 +85,8 @@ test.serial('sftpClient.download() saves a remote file to disk', async (t) => {
 
     t.is(size, 1098034);
   } finally {
-    await unlink(localPath);
+    // eslint-disable-next-line lodash/prefer-noop
+    await unlink(localPath).catch(() => {});
   }
 });
 

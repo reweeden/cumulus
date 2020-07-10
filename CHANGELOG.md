@@ -25,6 +25,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
     `@cumulus/common/BucketsConfig`. They now take a **required** `bucketTypes`
     parameter, which is a simple object mapping bucket names to bucket types.
     Example: `{ 'private-1': 'private', 'public-1': 'public' }`
+- Changes to the `@cumulus/sftp-client` package
+  - The `SftpClient` class must now be imported as
+    `const { SftpClient } = require('@cumulus/sftp-client')`
 - The minimum supported version of all published Cumulus packages is now Node
   12.18.0
   - Tasks using the `cumuluss/cumulus-ecs-task` Docker image must be updated to

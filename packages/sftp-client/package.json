@@ -13,14 +13,21 @@
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/nasa/cumulus/tree/master/packages/sftp-client",
+  "homepage": "https://github.com/nasa/cumulus/tree/master/packages/sftp-client#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nasa/cumulus"
+    "url": "https://github.com/nasa/cumulus",
+    "directory": "packages/sftp-client"
   },
+  "main": "dist/index.js",
+  "type": "dist/index.d.ts",
   "scripts": {
+    "clean": "rm -rf dist",
+    "prepare": "npm run tsc",
     "test": "../../node_modules/.bin/ava",
-    "test:coverage": "../../node_modules/.bin/nyc npm test"
+    "test:coverage": "../../node_modules/.bin/nyc npm test",
+    "tsc": "../../node_modules/.bin/tsc",
+    "watch-test": "../../node_modules/.bin/tsc-watch --onsuccess 'npm test'"
   },
   "ava": {
     "verbose": true,
@@ -31,12 +38,12 @@
   "dependencies": {
     "@cumulus/aws-client": "1.24.0",
     "@cumulus/common": "1.24.0",
-    "lodash": "^4.17.15",
     "mime-types": "^2.1.27",
     "ssh2": "^0.8.7"
   },
   "devDependencies": {
     "@cumulus/checksum": "1.24.0",
-    "@cumulus/test-data": "1.24.0"
+    "@cumulus/test-data": "1.24.0",
+    "@types/ssh2": "^0.5.44"
   }
 }
