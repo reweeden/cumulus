@@ -35,7 +35,7 @@ resource "aws_dynamodb_table" "access_tokens_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -59,7 +59,7 @@ resource "aws_dynamodb_table" "async_operations_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -89,7 +89,7 @@ resource "aws_dynamodb_table" "collections_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -113,7 +113,7 @@ resource "aws_dynamodb_table" "executions_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -143,7 +143,7 @@ resource "aws_dynamodb_table" "files_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -179,7 +179,7 @@ resource "aws_dynamodb_table" "granules_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -203,7 +203,7 @@ resource "aws_dynamodb_table" "pdrs_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -227,7 +227,7 @@ resource "aws_dynamodb_table" "providers_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -251,7 +251,7 @@ resource "aws_dynamodb_table" "reconciliation_reports_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -275,7 +275,7 @@ resource "aws_dynamodb_table" "rules_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
@@ -297,7 +297,7 @@ resource "aws_dynamodb_table" "semaphores_table" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
     ignore_changes = [ name ]
   }
 
