@@ -7,6 +7,27 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### BREAKING CHANGES
+
+#### CODE CHANGES
+
+- The `@cumulus/ingest/util.lookupMimeType` function now returns `undefined`
+  rather than `null` if the mime type could not be found.
+- The `@cumulus/ingest/lock.removeLock` function now returns `undefined`
+
+### Added
+
+- **CUMULUS-1886**
+  - Added `multiple sort keys` support to `@cumulus/api`
+
+### Fixed
+
+- Fixed bug with request headers in `@cumulus/launchpad-auth` causing Launchpad token requests to fail
+
+
+## [v2.0.0] 2020-07-23
+
+### BREAKING CHANGES
+
 - Changes to the `@cumulus/cumulus-api` package
   - The `CumulusApiClientError` class must now be imported using
     `const { CumulusApiClientError } = require('@cumulus/cumulus-api/CumulusApiClientError')`
@@ -141,6 +162,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- **CUMULUS-1902**
+  - Add Common Use Cases section under Operator Docs
+
 - **CUMULUS-2058**
   - Added `lambda_processing_role_name` as an output from the `cumulus` module
     to provide the processing role name
@@ -182,6 +206,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
     protected/public buckets and generate a mapping configuration used
     internally by Core.  This object is also exposed as an output of the Cumulus
     module as `distribution_bucket_map`.
+- **CUMULUS-1961**
+  - Replaces DynamoDB for Elasticsearch for reconciliationReportForCumulusCMR
+    comparisons between Cumulus and CMR.
 - **CUMULUS-1970**
   - Created the `add-missing-file-checksums` workflow task
   - Added `@cumulus/aws-client/S3.calculateObjectHash()` function
@@ -253,6 +280,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - **CUMULUS-1991**
   - Added missing `DISTRIBUTION_ENDPOINT` environment variable for API lambdas. This environment variable is required for API requests to move granules.
+
+- **CUMULUS-1961**
+  - Fixed granules and executions query params not getting sent to API in granule list operation in `@cumulus/api-client`
 
 ### Deprecated
 
@@ -3186,7 +3216,9 @@ Note: There was an issue publishing 1.12.0. Upgrade to 1.12.1.
 
 ## [v1.0.0] - 2018-02-23
 
-[unreleased]: https://github.com/nasa/cumulus/compare/v1.23.2...HEAD
+[unreleased]: https://github.com/nasa/cumulus/compare/v2.0.0...HEAD
+[v2.0.0]:  https://github.com/nasa/cumulus/compare/v1.24.0...v2.0.0
+[v1.24.0]: https://github.com/nasa/cumulus/compare/v1.23.2...v1.24.0
 [v1.23.2]: https://github.com/nasa/cumulus/compare/v1.22.1...v1.23.2
 [v1.22.1]: https://github.com/nasa/cumulus/compare/v1.21.0...v1.22.1
 [v1.21.0]: https://github.com/nasa/cumulus/compare/v1.20.0...v1.21.0
