@@ -1,7 +1,6 @@
-'use strict';
-
-const got = require('got');
-const Logger = require('@cumulus/logger');
+import got from 'got';
+import Logger from '@cumulus/logger';
+import { OutgoingHttpHeaders } from 'http';
 
 const log = new Logger({ sender: 'cmr-client' });
 
@@ -13,8 +12,11 @@ const log = new Logger({ sender: 'cmr-client' });
  * @returns {Object} - metadata as a JS object, null if not
  * found
  */
-async function getConceptMetadata(conceptLink, headers) {
-  let response;
+async function getConceptMetadata(
+  conceptLink: string,
+  headers: OutgoingHttpHeaders
+): Promise<null|unknown> {
+  let response: got.Response<string>;
 
   try {
     response = await got.get(conceptLink, { headers });
@@ -30,7 +32,7 @@ async function getConceptMetadata(conceptLink, headers) {
 
   const body = JSON.parse(response.body);
 
-  return body.feed.entry[0];
+  return <unknown>(body.feed.entry[0]);
 }
 
-module.exports = getConceptMetadata;
+export = getConceptMetadata;
