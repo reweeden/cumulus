@@ -6,7 +6,7 @@ const Logger = require('@cumulus/logger');
 
 const validate = require('./validate');
 const getUrl = require('./getUrl');
-const { parseXMLString } = require('./Utils');
+const { parseCmrXmlResponse } = require('./Utils');
 
 const log = new Logger({ sender: 'cmr-client' });
 
@@ -26,7 +26,7 @@ const logDetails = {
  * @returns {Promise.<Object>} the CMR response object
  */
 async function ingestConcept(type, xmlString, identifierPath, provider, headers) {
-  let xmlObject = await parseXMLString(xmlString);
+  let xmlObject = await parseCmrXmlResponse(xmlString);
 
   const identifier = property(identifierPath)(xmlObject);
   logDetails.granuleId = identifier;
@@ -42,7 +42,7 @@ async function ingestConcept(type, xmlString, identifierPath, provider, headers)
       }
     );
 
-    xmlObject = await parseXMLString(response.body);
+    xmlObject = await parseCmrXmlResponse(response.body);
 
     if (xmlObject.errors) {
       const xmlObjectError = JSON.stringify(xmlObject.errors.error);

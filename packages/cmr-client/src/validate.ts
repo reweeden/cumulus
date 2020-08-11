@@ -1,7 +1,7 @@
 import got from 'got';
 import ValidationError from './ValidationError';
 import getUrl from './getUrl';
-import { parseXMLString } from './Utils';
+import { parseCmrXmlResponse } from './Utils';
 
 /**
  * Posts a given xml string to the validate endpoint of the CMR
@@ -35,8 +35,8 @@ async function validate(
     result = error.response;
   }
 
-  const parsed = <{errors?: {error?: string}}>(await parseXMLString(result.body));
-  const error = parsed?.errors?.error;
+  const parsed = await parseCmrXmlResponse(result.body);
+  const error = parsed.errors?.error;
 
   throw new ValidationError(
     `Validation was not successful, CMR error message: ${JSON.stringify(error)}`

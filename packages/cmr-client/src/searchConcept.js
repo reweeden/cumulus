@@ -2,7 +2,7 @@
 
 const got = require('got');
 const getUrl = require('./getUrl');
-const { parseXMLString } = require('./Utils');
+const { parseCmrXmlResponse } = require('./Utils');
 
 /**
  *
@@ -37,7 +37,7 @@ async function searchConcept({
 
   const defaultParams = { page_size: pageSize };
 
-  const url = `${getUrl('search', null, cmrEnvironment)}${type}.${format.toLowerCase()}`;
+  const url = `${getUrl('search', undefined, cmrEnvironment)}${type}.${format.toLowerCase()}`;
 
   const pageNum = (searchParams.page_num) ? searchParams.page_num + 1 : 1;
 
@@ -46,7 +46,7 @@ async function searchConcept({
   const response = await got.get(url, { json: format.endsWith('json'), query, headers });
 
   const responseItems = (format === 'echo10')
-    ? (await parseXMLString(response.body)).results.result || []
+    ? (await parseCmrXmlResponse(response.body)).results.result || []
     : (response.body.items || response.body.feed.entry);
 
   const fetchedResults = previousResults.concat(responseItems || []);
