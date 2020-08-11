@@ -2,6 +2,7 @@ import got from 'got';
 import ValidationError from './ValidationError';
 import getUrl from './getUrl';
 import { parseCmrXmlResponse } from './Utils';
+import { ConceptType } from './types';
 
 /**
  * Posts a given xml string to the validate endpoint of the CMR
@@ -14,7 +15,7 @@ import { parseCmrXmlResponse } from './Utils';
  * @returns {Promise.<true>} returns true if the document is valid
  */
 async function validate(
-  type: string,
+  type: ConceptType,
   xml: string,
   identifier: string,
   provider: string

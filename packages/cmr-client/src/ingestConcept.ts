@@ -1,16 +1,16 @@
-'use strict';
+import got from 'got';
+import get from 'lodash/get';
+import Logger from '@cumulus/logger';
+import { OutgoingHttpHeaders } from 'http';
 
-const got = require('got');
-const property = require('lodash/property');
-const Logger = require('@cumulus/logger');
-
-const validate = require('./validate');
-const getUrl = require('./getUrl');
-const { parseCmrXmlResponse } = require('./Utils');
+import validate from './validate';
+import getUrl from './getUrl';
+import { parseCmrXmlResponse } from './Utils';
+import { ConceptType, ParsedCmrXmlResponse } from './types';
 
 const log = new Logger({ sender: 'cmr-client' });
 
-const logDetails = {
+const logDetails: {[key: string]: unknown} = {
   file: 'cmr-client/ingestConcept.js'
 };
 
@@ -25,10 +25,16 @@ const logDetails = {
  * @param {Object} headers - the CMR headers
  * @returns {Promise.<Object>} the CMR response object
  */
-async function ingestConcept(type, xmlString, identifierPath, provider, headers) {
-  let xmlObject = await parseCmrXmlResponse(xmlString);
+async function ingestConcept(
+  type: ConceptType,
+  xmlString: string,
+  identifierPath: string,
+  provider: string,
+  headers: OutgoingHttpHeaders
+): Promise<ParsedCmrXmlResponse> {
+  let cmrResponse = await parseCmrXmlResponse(xmlString);
 
-  const identifier = property(identifierPath)(xmlObject);
+  const identifier = <string>get(cmrResponse, identifierPath);
   logDetails.granuleId = identifier;
 
   try {
@@ -42,17 +48,17 @@ async function ingestConcept(type, xmlString, identifierPath, provider, headers)
       }
     );
 
-    xmlObject = await parseCmrXmlResponse(response.body);
+    cmrResponse = await parseCmrXmlResponse(response.body);
 
-    if (xmlObject.errors) {
-      const xmlObjectError = JSON.stringify(xmlObject.errors.error);
+    if (cmrResponse.errors) {
+      const xmlObjectError = JSON.stringify(cmrResponse.errors.error);
       throw new Error(`Failed to ingest, CMR error message: ${xmlObjectError}`);
     }
 
-    return xmlObject;
+    return cmrResponse;
   } catch (error) {
     log.error(error, logDetails);
     throw error;
   }
 }
-module.exports = ingestConcept;
+export = ingestConcept;
