@@ -1,6 +1,6 @@
 import got from 'got';
 import ValidationError from './ValidationError';
-import getUrl from './getUrl';
+import { getValidateUrl } from './getUrl';
 import { parseCmrXmlResponse } from './Utils';
 import { ConceptType } from './types';
 
@@ -22,7 +22,12 @@ async function validate(
 ): Promise<true> {
   let result;
   try {
-    result = await got.post(`${getUrl('validate', provider)}${type}/${identifier}`, {
+    const validateUrl = getValidateUrl({
+      cmrProvider: provider,
+      cmrEnvironment: process.env.CMR_ENVIRONMENT
+    });
+
+    result = await got.post(`${validateUrl}${type}/${identifier}`, {
       body: xml,
       headers: {
         'Content-type': 'application/echo10+xml'

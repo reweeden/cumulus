@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 #### CODE CHANGES
 
+- The `@cumulus/cmr-client/getUrl.getUrl` function has been replaced by
+  `getProviderUrl`, `getSearchUrl`, `getTokenUrl`, and `getValidateUrl`.
 - The `@cumulus/ingest/util.lookupMimeType` function now returns `undefined`
   rather than `null` if the mime type could not be found.
 - The `@cumulus/ingest/lock.removeLock` function now returns `undefined`

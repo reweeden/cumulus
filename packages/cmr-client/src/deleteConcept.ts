@@ -2,7 +2,7 @@ import Logger from '@cumulus/logger';
 import got, { Headers, Response } from 'got';
 import { parseCmrXmlResponse } from './Utils';
 
-import getUrl from './getUrl';
+import { getProviderUrl } from './getUrl';
 import { ParsedCmrXmlResponse } from './types';
 
 const log = new Logger({ sender: 'cmr-client' });
@@ -22,7 +22,13 @@ async function deleteConcept(
   provider: string,
   headers: Headers
 ): Promise<ParsedCmrXmlResponse> {
-  const url = `${getUrl('ingest', provider)}${type}/${identifier}`;
+  const providerUrl = getProviderUrl({
+    cmrProvider: provider,
+    cmrEnvironment: process.env.CMR_ENVIRONMENT
+  });
+
+  const url = `${providerUrl}${type}/${identifier}`;
+
   log.info(`deleteConcept ${url}`);
 
   let result: Response<string>;

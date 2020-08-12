@@ -1,5 +1,5 @@
 import got from 'got';
-import getUrl from './getUrl';
+import { getValidateUrl } from './getUrl';
 import ValidationError from './ValidationError';
 import { ParsedCmrXmlResponse } from './types';
 
@@ -36,8 +36,13 @@ export const validateUMMG = async (
 ): Promise<void> => {
   const version = ummVersion(ummMetadata);
 
+  const validateUrl = getValidateUrl({
+    cmrProvider: provider,
+    cmrEnvironment: process.env.CMR_ENVIRONMENT
+  });
+
   const { statusCode, body } = await got.post(
-    `${getUrl('validate', provider)}granule/${identifier}`,
+    `${validateUrl}granule/${identifier}`,
     {
       headers: {
         Accept: 'application/json',

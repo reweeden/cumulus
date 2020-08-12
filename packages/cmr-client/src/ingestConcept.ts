@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import Logger from '@cumulus/logger';
 
 import validate from './validate';
-import getUrl from './getUrl';
+import { getProviderUrl } from './getUrl';
 import { parseCmrXmlResponse } from './Utils';
 import { ConceptType, ParsedCmrXmlResponse } from './types';
 
@@ -39,8 +39,13 @@ async function ingestConcept(
   try {
     await validate(type, xmlString, identifier, provider);
 
+    const providerUrl = getProviderUrl({
+      cmrProvider: provider,
+      cmrEnvironment: process.env.CMR_ENVIRONMENT
+    });
+
     const response = await got.put(
-      `${getUrl('ingest', provider)}${type}s/${identifier}`,
+      `${providerUrl}${type}s/${identifier}`,
       {
         body: xmlString,
         headers
