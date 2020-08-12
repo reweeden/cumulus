@@ -55,6 +55,10 @@ const stubclient = {
   })
 };
 
+test.before(() => {
+  process.env.CMR_ENVIRONMENT = 'SIT';
+});
+
 test.serial('deleteConcept returns expected result when granule is in CMR', async (t) => {
   statusCode = 200;
   const stub = sinon.stub(got, 'delete').callsFake(stubclient.delete);

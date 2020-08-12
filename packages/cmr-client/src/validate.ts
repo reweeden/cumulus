@@ -20,13 +20,13 @@ async function validate(
   identifier: string,
   provider: string
 ): Promise<true> {
+  const validateUrl = getValidateUrl({
+    cmrProvider: provider,
+    cmrEnvironment: process.env.CMR_ENVIRONMENT
+  });
+
   let result;
   try {
-    const validateUrl = getValidateUrl({
-      cmrProvider: provider,
-      cmrEnvironment: process.env.CMR_ENVIRONMENT
-    });
-
     result = await got.post(`${validateUrl}${type}/${identifier}`, {
       body: xml,
       headers: {

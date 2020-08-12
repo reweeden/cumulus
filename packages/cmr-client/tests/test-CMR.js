@@ -12,6 +12,7 @@ const ValidationError = require('../ValidationError');
 test.before(() => {
   nock.disableNetConnect();
   nock.enableNetConnect(/(localhost|127.0.0.1)/);
+  process.env.CMR_ENVIRONMENT = 'SIT';
 });
 
 test.afterEach.always(() => {
@@ -55,7 +56,6 @@ test.serial('CMR.searchCollection handles paging correctly.', async (t) => {
     { cmrEntry5: 'data5' },
     { cmrEntry6: 'data6' }
   ];
-  process.env.CMR_ENVIRONMENT = 'UAT';
 
   const cmrSearch = new CMR({
     provider: 'CUMULUS',
@@ -63,11 +63,19 @@ test.serial('CMR.searchCollection handles paging correctly.', async (t) => {
     username: 'username',
     password: 'password'
   });
-  const results = await cmrSearch.searchCollections();
+
+  const cmrEnvBefore = process.env.CMR_ENVIRONMENT;
+
+  let results;
+  try {
+    process.env.CMR_ENVIRONMENT = 'UAT';
+
+    results = await cmrSearch.searchCollections();
+  } finally {
+    process.env.CMR_ENVIRONMENT = cmrEnvBefore;
+  }
 
   t.is(expected.length, results.length);
-
-  delete process.env.CMR_ENVIRONMENT;
 
   expected.forEach((expectedItem) => t.true(some(results, expectedItem)));
 });
@@ -125,13 +133,9 @@ test.serial('ingestUMMGranule() throws an exception if the input fails validatio
     ]
   };
 
-  process.env.CMR_ENVIRONMENT = 'SIT';
-
   nock('https://cmr.sit.earthdata.nasa.gov')
     .post(`/ingest/providers/${cmrSearch.provider}/validate/granule/${ummgMetadata.GranuleUR}`)
     .reply(422, ummValidationError);
-
-  delete process.env.CMR_ENVIRONMENT;
 
   await t.throwsAsync(
     () => cmrSearch.ingestUMMGranule(ummgMetadata),

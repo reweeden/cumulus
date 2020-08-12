@@ -1,7 +1,7 @@
 'use strict';
 
 const got = require('got');
-const getUrl = require('./getUrl');
+const { getSearchUrl } = require('./getUrl');
 const { parseCmrXmlResponse } = require('./Utils');
 
 /**
@@ -37,7 +37,8 @@ async function searchConcept({
 
   const defaultParams = { page_size: pageSize };
 
-  const url = `${getUrl('search', undefined, cmrEnvironment)}${type}.${format.toLowerCase()}`;
+  const searchUrl = getSearchUrl({ cmrEnvironment });
+  const url = `${searchUrl}${type}.${format.toLowerCase()}`;
 
   const pageNum = (searchParams.page_num) ? searchParams.page_num + 1 : 1;
 

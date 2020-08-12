@@ -8,6 +8,10 @@ const searchConcept = require('../searchConcept');
 
 const clientId = 'cumulus-test-client';
 
+test.before(() => {
+  process.env.CMR_ENVIRONMENT = 'SIT';
+});
+
 test.serial('searchConcept request includes CMR client id', async (t) => {
   let request;
   const stub = sinon.stub(got, 'get').callsFake((_url, opt) => {

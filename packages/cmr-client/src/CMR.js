@@ -10,7 +10,7 @@ const searchConcept = require('./searchConcept');
 const ingestConcept = require('./ingestConcept');
 const deleteConcept = require('./deleteConcept');
 const getConcept = require('./getConcept');
-const getUrl = require('./getUrl');
+const { getProviderUrl, getTokenUrl } = require('./getUrl');
 const { ummVersion, validateUMMG } = require('./UmmUtils');
 
 const log = new Logger({ sender: 'cmr-client' });
@@ -44,10 +44,13 @@ async function updateToken(cmrProvider, clientId, username, password) {
 
   // Update the saved ECHO token
   // for info on how to add collections to CMR: https://cmr.earthdata.nasa.gov/ingest/site/ingest_api_docs.html#validate-collection
+
+  const tokenUrl = getTokenUrl(process.env.CMR_ENVIRONMENT);
+
   let response;
 
   try {
-    response = await got.post(getUrl('token'), {
+    response = await got.post(tokenUrl, {
       responseType: 'json',
       json: {
         token: {
@@ -223,8 +226,13 @@ class CMR {
     try {
       await validateUMMG(ummgMetadata, granuleId, this.provider);
 
+      const providerUrl = getProviderUrl({
+        cmrProvider: this.provider,
+        cmrEnvironment: process.env.CMR_ENVIRONMENT
+      });
+
       response = await got.put(
-        `${getUrl('ingest', this.provider)}granules/${granuleId}`,
+        `${providerUrl}granules/${granuleId}`,
         {
           json: true,
           body: ummgMetadata,
