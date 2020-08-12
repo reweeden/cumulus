@@ -1,7 +1,6 @@
-import got from 'got';
+import got, { Headers } from 'got';
 import get from 'lodash/get';
 import Logger from '@cumulus/logger';
-import { OutgoingHttpHeaders } from 'http';
 
 import validate from './validate';
 import getUrl from './getUrl';
@@ -30,7 +29,7 @@ async function ingestConcept(
   xmlString: string,
   identifierPath: string,
   provider: string,
-  headers: OutgoingHttpHeaders
+  headers: Headers
 ): Promise<ParsedCmrXmlResponse> {
   let cmrResponse = await parseCmrXmlResponse(xmlString);
 

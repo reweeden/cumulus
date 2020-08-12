@@ -1,6 +1,5 @@
-import got from 'got';
+import got, { Headers, Response } from 'got';
 import Logger from '@cumulus/logger';
-import { OutgoingHttpHeaders } from 'http';
 
 const log = new Logger({ sender: 'cmr-client' });
 
@@ -14,9 +13,9 @@ const log = new Logger({ sender: 'cmr-client' });
  */
 async function getConceptMetadata(
   conceptLink: string,
-  headers: OutgoingHttpHeaders
+  headers: Headers
 ): Promise<null|unknown> {
-  let response: got.Response<string>;
+  let response: Response<string>;
 
   try {
     response = await got.get(conceptLink, { headers });

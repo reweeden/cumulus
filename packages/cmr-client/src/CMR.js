@@ -48,8 +48,8 @@ async function updateToken(cmrProvider, clientId, username, password) {
 
   try {
     response = await got.post(getUrl('token'), {
-      json: true,
-      body: {
+      responseType: 'json',
+      json: {
         token: {
           username: username,
           password: password,

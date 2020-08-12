@@ -1,6 +1,5 @@
 import Logger from '@cumulus/logger';
-import got from 'got';
-import { OutgoingHttpHeaders } from 'http';
+import got, { Headers, Response } from 'got';
 import { parseCmrXmlResponse } from './Utils';
 
 import getUrl from './getUrl';
@@ -21,12 +20,12 @@ async function deleteConcept(
   type: string,
   identifier: string,
   provider: string,
-  headers: OutgoingHttpHeaders
+  headers: Headers
 ): Promise<ParsedCmrXmlResponse> {
   const url = `${getUrl('ingest', provider)}${type}/${identifier}`;
   log.info(`deleteConcept ${url}`);
 
-  let result: got.Response<string>;
+  let result: Response<string>;
   try {
     result = await got.delete(url, { headers });
   } catch (error) {

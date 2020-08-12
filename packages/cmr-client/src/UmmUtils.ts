@@ -1,6 +1,7 @@
 import got from 'got';
 import getUrl from './getUrl';
 import ValidationError from './ValidationError';
+import { ParsedCmrXmlResponse } from './types';
 
 export interface UmmMetadata {
   MetadataSpecification: {
@@ -23,7 +24,7 @@ export const ummVersion = (umm: UmmMetadata): string =>
  * Posts a given XML string to the validate endpoint of CMR and throws an
  * exception if it is not valid
  *
- * @param {string} ummMetadata - the UMM object
+ * @param {UmmMetadata} ummMetadata - the UMM object
  * @param {string} identifier - the document identifier
  * @param {string} provider - the CMR provider
  * @returns {Promise<undefined>}
@@ -38,17 +39,21 @@ export const validateUMMG = async (
   const { statusCode, body } = await got.post(
     `${getUrl('validate', provider)}granule/${identifier}`,
     {
-      json: true,
-      body: ummMetadata,
       headers: {
         Accept: 'application/json',
         'Content-type': `application/vnd.nasa.cmr.umm+json;version=${version}`
       },
+      json: ummMetadata,
+      responseType: 'json',
       throwHttpErrors: false
     }
   );
 
   if (statusCode === 200) return;
 
-  throw new ValidationError(`Validation was not successful, CMR error message: ${JSON.stringify(body.errors)}`);
+  const errors = JSON.stringify((<ParsedCmrXmlResponse>body).errors);
+
+  throw new ValidationError(
+    `Validation was not successful, CMR error message: ${errors}`
+  );
 };
