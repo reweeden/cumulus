@@ -24,9 +24,9 @@ const omit = require('lodash/omit');
 const errors = require('@cumulus/errors');
 const CMR = require('@cumulus/cmr-client/CMR');
 const { ummVersion } = require('@cumulus/cmr-client/UmmUtils');
+const { getSearchUrl } = require('@cumulus/cmr-client/getUrl');
 
 const {
-  getUrl,
   xmlParseOptions,
   ummVersionToMetadataFormat
 } = require('./utils');
@@ -123,12 +123,16 @@ async function publishECHO10XML2CMR(cmrFile, cmrClient) {
 
   log.info(`Published ${cmrFile.granuleId} to the CMR. conceptId: ${conceptId}`);
 
+  const cmrSearchUrl = getSearchUrl({
+    cmrEnvironment: process.env.CMR_ENVIRONMENT
+  });
+
   return {
     granuleId: cmrFile.granuleId,
     filename: getS3UrlOfFile(cmrFile),
     conceptId,
     metadataFormat: 'echo10',
-    link: `${getUrl('search', undefined, process.env.CMR_ENVIRONMENT)}granules.json?concept_id=${conceptId}`
+    link: `${cmrSearchUrl}granules.json?concept_id=${conceptId}`
   };
 }
 
@@ -150,12 +154,16 @@ async function publishUMMGJSON2CMR(cmrFile, cmrClient) {
 
   log.info(`Published UMMG ${granuleId} to the CMR. conceptId: ${conceptId}`);
 
+  const cmrSearchUrl = getSearchUrl({
+    cmrEnvironment: process.env.CMR_ENVIRONMENT
+  });
+
   return {
     granuleId,
     filename: getS3UrlOfFile(cmrFile),
     conceptId,
     metadataFormat: ummVersionToMetadataFormat(ummVersion(cmrFile.metadataObject)),
-    link: `${getUrl('search', undefined, process.env.CMR_ENVIRONMENT)}granules.json?concept_id=${conceptId}`
+    link: `${cmrSearchUrl}granules.json?concept_id=${conceptId}`
   };
 }
 

@@ -6,7 +6,7 @@ const pWaitFor = require('p-wait-for');
 const xml2js = require('xml2js');
 const { s3 } = require('@cumulus/aws-client/services');
 const log = require('@cumulus/common/log');
-const { getUrl } = require('@cumulus/cmrjs/utils');
+const { getSearchUrl } = require('@cumulus/cmr-client/getUrl');
 
 const ONE_SECOND = 1000;
 const THREE_SECONDS = 3000;
@@ -328,7 +328,11 @@ async function getOnlineResources({ cmrMetadataFormat, cmrConceptId, cmrLink }) 
     return getOnlineResourcesECHO10(cmrLink);
   }
   if (isUMMGMetadataFormat(cmrMetadataFormat)) {
-    return getOnlineResourcesUMMG(`${getUrl('search')}granules.umm_json?concept_id=${cmrConceptId}`);
+    const cmrSearchUrl = getSearchUrl({
+      cmrEnvironment: process.env.CMR_ENVIRONMENT
+    });
+
+    return getOnlineResourcesUMMG(`${cmrSearchUrl}granules.umm_json?concept_id=${cmrConceptId}`);
   }
   throw new Error(`Invalid cmrMetadataFormat passed to getOnlineResources: ${cmrMetadataFormat}}`);
 }
