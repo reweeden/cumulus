@@ -18,8 +18,8 @@ if [[ $commit_message_contains_skip_audit_flag = false && $commit_matches_versio
   npm install --no-audit
   whoami
   df -h
+  ls -ltr /
   ls -ltr /source/
-  ls -ltr /source/cumulus
   npm run install-locks;
   npm run audit;
 else
