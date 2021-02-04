@@ -7,7 +7,7 @@ set -ex
 NONCACHE_WORKING_DIR=$(pwd)
 CURRENT_WORKING_DIR=$NONCACHE_WORKING_DIR
 
-cd source/cumulus
+cd /cumulus
 
 #if [[ $USE_CACHED_BOOTSTRAP == true ]]; then
 #  echo "*** Using cached bootstrap build dir"
