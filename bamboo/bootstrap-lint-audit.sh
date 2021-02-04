@@ -7,8 +7,8 @@ set -e
 echo "RUNNING CHECKS"
 
 ls -ltra /
-echo "RUNNING FIND CUMULUS"
-find /source/cumulus/
+echo "RUNNING FIND SOURCE"
+find /source/
 echo "RUNNING FIND CUMULUS"
 find /cumulus/
 
