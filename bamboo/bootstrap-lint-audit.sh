@@ -15,6 +15,6 @@ if [[ $USE_CACHED_BOOTSTRAP == true ]]; then ## Change into cached cumulus, pull
 fi
 
 # Extract cache of compiled TS files
-./bamboo/extract-ts-build-cache.sh
+# ./bamboo/extract-ts-build-cache.sh
 npm install --ignore-scripts --no-package-lock
 ln -s /dev/stdout ./lerna-debug.log
