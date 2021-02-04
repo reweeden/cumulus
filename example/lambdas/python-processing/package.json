@@ -14,7 +14,7 @@
     "lint": "npm run python-lint",
     "clean": "rm -rf .venv",
     "build": "pip install pipenv && PIPENV_VENV_IN_PROJECT=1 pipenv install --dev --deploy --ignore-pipfile",
-    "prepare": "npm run build",
+    "prepare": "true",
     "package": "true",
     "install-python-deps": "npm run build"
   },
