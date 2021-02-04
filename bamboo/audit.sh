@@ -17,9 +17,9 @@ fi
 if [[ $commit_message_contains_skip_audit_flag = false && $commit_matches_version_tag = false && $SKIP_AUDIT != true ]]; then
   npm install --no-audit
   whoami
-  chown -R root:root /root
-  chmod -R 700 /root
-  chown -R 500:502 "/root/.npm"
+  df -h
+  ls -ltr /source/
+  ls -ltr /source/cumulus
   npm run install-locks;
   npm run audit;
 else
