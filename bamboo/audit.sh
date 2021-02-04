@@ -16,8 +16,10 @@ fi
 
 if [[ $commit_message_contains_skip_audit_flag = false && $commit_matches_version_tag = false && $SKIP_AUDIT != true ]]; then
   npm install --no-audit
+  whoami
   chown -R root:root /root
   chmod -R 700 /root
+  sudo chown -R 500:502 "/root/.npm"
   npm run install-locks;
   npm run audit;
 else
