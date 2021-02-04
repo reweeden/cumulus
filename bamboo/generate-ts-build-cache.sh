@@ -4,6 +4,11 @@ set -ex
 . ./bamboo/set-bamboo-env-variables.sh
 . ./bamboo/abort-if-not-pr.sh
 
+ls -ltr /
+ls -ltra /source
+echo "FINDING SOURCE"
+find /source
+
 NONCACHE_WORKING_DIR=$(pwd)
 CURRENT_WORKING_DIR=$NONCACHE_WORKING_DIR
 
