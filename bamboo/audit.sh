@@ -6,6 +6,11 @@ set -ex
 commit_message_contains_skip_audit_flag=false
 commit_matches_version_tag=false
 
+  whoami
+  df -h
+  ls -ltr /
+  ls -ltr /source/
+  ls -ltra /root/
 
 if [[ $(git log --pretty='format:%Creset%s' -1) =~ '[skip-audit]' ]]; then
   commit_message_contains_skip_audit_flag=true;
@@ -20,7 +25,15 @@ if [[ $commit_message_contains_skip_audit_flag = false && $commit_matches_versio
   df -h
   ls -ltr /
   ls -ltr /source/
+  ls -ltra /root/
+  pwd
   npm run install-locks;
+  npm install --no-audit
+  whoami
+  df -h
+  ls -ltr /
+  ls -ltr /source/
+  ls -ltra /root/
   npm run audit;
 else
   >&2 echo "******Skipping audit due to commit message/version tag/env var being present"

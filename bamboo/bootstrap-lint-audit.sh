@@ -4,6 +4,13 @@ set -e
 . ./bamboo/set-bamboo-env-variables.sh
 . ./bamboo/abort-if-not-pr.sh
 
+echo "RUNNING CHECKS"
+
+ls -ltra /
+echo "RUNNING FIND CUMULUS"
+find /source/cumulus/
+echo "RUNNING FIND CUMULUS"
+find /cumulus/
 
 if [[ $USE_CACHED_BOOTSTRAP == true ]]; then ## Change into cached cumulus, pull down /cumulus ref and run there
   echo "*** Using cached bootstrap"
