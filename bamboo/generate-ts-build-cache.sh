@@ -31,6 +31,7 @@ cd /cumulus
 
 # Generate TS build cache artifact
 tar cf $TS_BUILD_CACHE_FILE CHANGELOG.md
+cp $TS_BUILD_CACHE_FILE "$NONCACHE_WORKING_DIR"
 
 #if [[ $USE_CACHED_BOOTSTRAP == true ]]; then
 #  cp $TS_BUILD_CACHE_FILE "$NONCACHE_WORKING_DIR"
