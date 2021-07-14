@@ -18,9 +18,10 @@ const EXECUTION_LIST_LIMIT = 50;
 /**
  * Find the execution ARN matching the `matcher` function
  *
- * @param {string} prefix - the name of the Cumulus stack
+ * @param {string} prefix  - the name of the Cumulus stack
  * @param {Function} matcher - a predicate function that takes an execution and determines if this
  * is the execution that is being searched for
+ * @param {Object} queryParameters - parameters of query
  * @param {Object} [options]
  * @param {integer} [options.timeout=0] - the number of seconds to wait for a matching execution
  * to be found
